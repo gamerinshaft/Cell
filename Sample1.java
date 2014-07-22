@@ -1,20 +1,7 @@
-/*-----------------------------
---     再帰的なデータ構造     --
------------------------------*/
-class Cell {
-    Cell next;
-    Object data;
-
-    Cell( Object obj ) {
-        next = null;
-        data = obj;
-    }
-}
-
-class Practice1 {
+class Sample1 {
     Cell header;
 
-    Practice1() {
+    Sample1() {
         /*
             リストヘッド(ダミーセル)については後述します
 
@@ -24,23 +11,20 @@ class Practice1 {
 
     void topInsert(Object data) {
         Cell p = new Cell(data);
-
-
-        //--(作成してください)--
+        header = p;
 
     }
 
     String printList() {
         String s = "[ ";
-        s += header.data + " ";
-        s += "]";
+        s += header.data;
+        s += " ]";
         return s;
     }
 
     public static void main(String args[]) {
-        Practice1 s = new Practice1();
+        Sample1 s = new Sample1();
         s.topInsert("a");
-
         System.out.println( s.printList() );
     }
 }
