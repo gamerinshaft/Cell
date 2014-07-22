@@ -3,6 +3,7 @@ import java.util.*;
 import java.awt.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.lang.*;
 
 class Sample4 {
   Cell header, newCell;
@@ -26,6 +27,7 @@ class Sample4 {
       pastCell = pastCell.next;
     }
     pastCell.next = newCell;
+    sortOfData(header.next);
   }
 
   private boolean isNextCellExist(Cell cell){
@@ -46,6 +48,24 @@ class Sample4 {
     invertInsert(cell);
     str += "]";
     return str;
+  }
+
+  private void sortOfData(Cell cell){
+    Cell nextCell = cell.next;
+    Object tmp;
+    Integer pareData = Integer.parseInt(cell.data + "");
+    while(nextCell != null){
+      Integer chilData =  Integer.parseInt(nextCell.data + "");
+      if( pareData > chilData ){
+        tmp = cell.data;
+        cell.data = nextCell.data;
+        nextCell.data = tmp;
+      }
+      nextCell = nextCell.next;
+    }
+    if(cell.next != null){
+      sortOfData(cell.next);
+    }
   }
 
   void regularInsert(Cell cell){
@@ -88,10 +108,8 @@ class Sample4 {
   }
 
   private static boolean isNumber(String value){
-    Pattern num = Pattern.compile("[^1-9]");
+    Pattern num = Pattern.compile("[^0-9]");
     return !num.matcher(value).find();
   }
-
-
 }
 
