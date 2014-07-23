@@ -95,6 +95,8 @@ class Sample4 {
         value = input.readLine( );
         if(value.equals("finish")){
           isContinue = false;
+        }else if(value.equals("") || value.indexOf(" ") >= 0 || value.indexOf("　") >= 0){
+          System.out.println("空白文字は含まないで下さい");
         }else if(isNumber(value)){
           s.insert(value);
           System.out.println( s.printList() );
