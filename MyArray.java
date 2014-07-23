@@ -1,15 +1,11 @@
 import java.io.*;
 import java.util.*;
 import java.awt.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.lang.*;
-
-class Sample4 {
+class MyArray {
   Cell header, newCell;
   String str;
 
-  Sample4() {
+  MyArray() {
     header = new Cell("");
   }
 
@@ -27,7 +23,6 @@ class Sample4 {
       pastCell = pastCell.next;
     }
     pastCell.next = newCell;
-    sortOfData(header.next);
   }
 
   private boolean isNextCellExist(Cell cell){
@@ -50,24 +45,6 @@ class Sample4 {
     return str;
   }
 
-  private void sortOfData(Cell cell){
-    Cell nextCell = cell.next;
-    Object tmp;
-    Integer pareData = Integer.parseInt(cell.data + "");
-    while(nextCell != null){
-      Integer chilData =  Integer.parseInt(nextCell.data + "");
-      if( pareData > chilData ){
-        tmp = cell.data;
-        cell.data = nextCell.data;
-        nextCell.data = tmp;
-      }
-      nextCell = nextCell.next;
-    }
-    if(cell.next != null){
-      sortOfData(cell.next);
-    }
-  }
-
   void regularInsert(Cell cell){
     str += cell.data + " ";
     if(cell.next !=null){
@@ -85,7 +62,7 @@ class Sample4 {
   public static void main(String args[]) {
     boolean isContinue = true;
     String value;
-    Sample4 s = new Sample4();
+    MyArray s = new MyArray();
     System.out.println("終了したい場合は finish と入力して下さい。");
     while(isContinue){
       try{
@@ -97,11 +74,10 @@ class Sample4 {
           isContinue = false;
         }else if(value.equals("") || value.indexOf(" ") >= 0 || value.indexOf("　") >= 0){
           System.out.println("空白文字は含まないで下さい");
-        }else if(isNumber(value)){
+
+        }else{
           s.insert(value);
           System.out.println( s.printList() );
-        }else{
-          System.out.println("半角英数字のみです");
         }
       }catch(IOException e){
         e.printStackTrace();
@@ -109,9 +85,5 @@ class Sample4 {
     }
   }
 
-  private static boolean isNumber(String value){
-    Pattern num = Pattern.compile("[^0-9]");
-    return !num.matcher(value).find();
-  }
 }
 

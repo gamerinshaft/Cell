@@ -1,11 +1,15 @@
 import java.io.*;
 import java.util.*;
 import java.awt.*;
-class Sample3 {
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.lang.*;
+
+class SortArray {
   Cell header, newCell;
   String str;
 
-  Sample3() {
+  SortArray() {
     header = new Cell("");
   }
 
@@ -23,6 +27,7 @@ class Sample3 {
       pastCell = pastCell.next;
     }
     pastCell.next = newCell;
+    sortOfData(header.next);
   }
 
   private boolean isNextCellExist(Cell cell){
@@ -45,6 +50,24 @@ class Sample3 {
     return str;
   }
 
+  private void sortOfData(Cell cell){
+    Cell nextCell = cell.next;
+    Object tmp;
+    Integer pareData = Integer.parseInt(cell.data + "");
+    while(nextCell != null){
+      Integer chilData =  Integer.parseInt(nextCell.data + "");
+      if( pareData > chilData ){
+        tmp = cell.data;
+        cell.data = nextCell.data;
+        nextCell.data = tmp;
+      }
+      nextCell = nextCell.next;
+    }
+    if(cell.next != null){
+      sortOfData(cell.next);
+    }
+  }
+
   void regularInsert(Cell cell){
     str += cell.data + " ";
     if(cell.next !=null){
@@ -62,7 +85,7 @@ class Sample3 {
   public static void main(String args[]) {
     boolean isContinue = true;
     String value;
-    Sample3 s = new Sample3();
+    SortArray s = new SortArray();
     System.out.println("終了したい場合は finish と入力して下さい。");
     while(isContinue){
       try{
@@ -74,10 +97,11 @@ class Sample3 {
           isContinue = false;
         }else if(value.equals("") || value.indexOf(" ") >= 0 || value.indexOf("　") >= 0){
           System.out.println("空白文字は含まないで下さい");
-
-        }else{
+        }else if(isNumber(value)){
           s.insert(value);
           System.out.println( s.printList() );
+        }else{
+          System.out.println("半角英数字のみです");
         }
       }catch(IOException e){
         e.printStackTrace();
@@ -85,5 +109,9 @@ class Sample3 {
     }
   }
 
+  private static boolean isNumber(String value){
+    Pattern num = Pattern.compile("[^0-9]");
+    return !num.matcher(value).find();
+  }
 }
 
